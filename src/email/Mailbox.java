@@ -147,7 +147,8 @@ public class Mailbox implements Serializable {
         
         System.out.println(folderName);
         char folderInput = printEmails(folder);
-        switch(folderInput) {
+        try {
+            switch(folderInput) {
                 case 'M': // Move Email
                     System.out.print("Enter Email index to move: ");
                     int emailIndexMove = input.nextInt(); input.nextLine();
@@ -178,6 +179,8 @@ public class Mailbox implements Serializable {
                     System.out.println(viewed.toString());
                     System.out.println("Press any key to continue...");
                     input.nextLine();
+                    break;
+                    
                 case 'W': // Sort
                     folder.sortBy(folder.SUBJECT_ASC);
                     promptFolder(folderName);
@@ -196,6 +199,9 @@ public class Mailbox implements Serializable {
                     break;
                 case 'R': break; // Return
             }
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("\n\nAn email Index went out of bounds. Restarting.");
+        }
     }
     
     public static char printEmails(Folder folder) {
